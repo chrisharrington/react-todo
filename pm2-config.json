@@ -1,0 +1,10 @@
+{
+    "apps": [
+        {
+            "name": "example",
+            "script": "node_modules/brunch/bin/brunch",
+            "args": "['watch', '--server']",
+            "exec_mode"  : "fork_mode"
+        }
+    ]
+}

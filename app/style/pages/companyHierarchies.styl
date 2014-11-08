@@ -1,0 +1,47 @@
+@require "../application.styl";
+
+.company-hierarchies-container {
+	>div.local-header { float:left; width:100%;
+		>h2 { float:left; }
+		>div.actions { float:right; }
+	}
+    >div.dropdown { float:left; width:450px; margin-top:spacing; }
+    
+	>div.drilldowns { float:left; width:100%; margin-top:spacing; position:relative;
+		>div { float:left; width:25%; padding-left:spacing; border-box;
+			&:first-child { padding-left:0; }
+			
+			>h3 { float:left; width:100%; }
+			>div.create { float:left; width:100%; margin-top:spacing; display:none;
+				&.show { display:block; }
+				>button { float:left; width:100%; }
+			}
+			>div.list { float:left; width:100%; margin-top:small-spacing;
+				>div { float:left; width:100%; padding:small-spacing spacing; background:#EAEAEA; margin-top:2px; cursor:pointer; border-radius(2px); border-box;
+					&:hover { background:#E0E0E0; }
+					&.selected { background:linear-gradient(to bottom, #428bca 0%, #2d6ca2 100%); color:white; }
+					
+					>span { float:left; width:100%; }
+				}
+				
+				>div.nav {
+					icon-width = 7px
+					>span { padding-right:icon-width+spacing; position:relative; border-box; }
+					>i { float:left; width:icon-width; margin-left:icon-width*-1; position:relative; text-align:right; font-size:1.125em; font-weight:bold; vertical-centre(20px); }
+				}
+			}
+		}
+	}
+	
+    #company-modal {
+        .modal-body.container { width:100%;
+			.row { margin-top:tiny-spacing;
+				label { color:black; vertical-centre(35px); }
+			}
+        }
+        
+        .modal-footer .error-message { float:left; color:#a94442; vertical-centre(34px); opacity:0; transition:opacity ease 150ms;
+			&.show { opacity:1; }
+		}
+    }
+}

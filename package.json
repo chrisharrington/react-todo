@@ -1,0 +1,34 @@
+{
+  "name": "brunch-spa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bower": "^1.3.12",
+    "clean-css-brunch": "1.6.x",
+    "config": "^1.2.4",
+    "connect": "2.9.x",
+    "css-brunch": "1.7.x",
+    "http-proxy": "0.10.x",
+    "javascript-brunch": "1.7.x",
+    "jshint-brunch": "1.6.x",
+    "react-brunch": "^1.0.5",
+    "react-tags-brunch": "^1.7.1",
+    "stylus-brunch": "1.7.x",
+    "uglify-js-brunch": "1.7.x",
+    "underscore": "^1.6.0",
+    "pm2": "^0.11.1",
+    "brunch": "^1.7.18",
+    "react-test-utils": "0.0.1"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-stylus": "^0.20.0",
+    "jasmine-react-helpers": "^0.2.0"
+  }
+}

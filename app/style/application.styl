@@ -1,0 +1,67 @@
+@import "nib"
+
+// Variables
+
+secondary-font-colour = #428bca
+placeholder-colour = rgb(122, 122, 122)
+border = solid 1px #ddd
+input-border = solid 1px #ccc
+
+header-height = 50px
+
+tiny-spacing = 4px
+small-spacing = 8px
+spacing = 15px
+
+
+// Mixins
+
+vertical-centre(height)
+	height height
+	line-height height !important
+	display inline-block
+	vertical-align middle
+
+border-radius(radius)
+	border-radius radius
+	-moz-border-radius radius
+	
+border-box()
+	box-sizing border-box
+	-moz-box-sizing border-box
+	
+
+// Global
+
+h1, h2, h3, h4 { padding:0; margin:0; }
+body>div.content { position:relative; top:header-height+spacing; padding:spacing 0; }
+input { color:rgb(51, 51, 51) !important; }
+
+// Modal
+
+.modal {
+	.modal-body.container, .modal-body.container-fluid { width:100%;
+		.row { margin-top:small-spacing;
+			label { color:black; vertical-centre(35px); margin:0; }
+			
+			div.radio { float:left; width:auto; overfloww:hidden; }
+		}
+	}
+
+	.modal-footer .error-message { float:left; color:#a94442; vertical-centre(34px); opacity:0; transition:opacity ease 150ms;
+		&.show { opacity:1; }
+	}
+
+	.row.hide { display:none; }
+}
+
+
+// Radio buttons
+
+div.radio { border-radius(4px); margin:0;
+	>span { float:left; vertical-centre(35px); padding:0 spacing; border:input-border; border-left:none; width:75px; text-align:center; cursor:pointer;
+		&.selected { background:linear-gradient(to bottom, #428bca 0%, #2d6ca2 100%); color:white; }
+		&.first { border-left:input-border; border-bottom-left-radius:4px; -moz-border-radius-bottomleft:4px; border-top-left-radius:4px; -moz-border-radius-topleft:4px; }
+		&.last { border-bottom-right-radius:4px; -moz-border-radius-bottomright:4px; border-top-right-radius:4px; -moz-border-radius-topright:4px; }
+	}
+}
