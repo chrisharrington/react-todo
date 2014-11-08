@@ -1,0 +1,10 @@
+[
+	{ "id": 1, "operatingAreaId": 1, "name": "Area 1" },
+	{ "id": 2, "operatingAreaId": 1, "name": "Area 2" },
+	{ "id": 3, "operatingAreaId": 2, "name": "Area 3" },
+	{ "id": 4, "operatingAreaId": 2, "name": "Area 4" },
+	{ "id": 5, "operatingAreaId": 3, "name": "Area 5" },
+	{ "id": 6, "operatingAreaId": 3, "name": "Area 6" },
+	{ "id": 7, "operatingAreaId": 4, "name": "Area 7" },
+	{ "id": 8, "operatingAreaId": 4, "name": "Area 8" }
+]

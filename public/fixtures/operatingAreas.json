@@ -1,0 +1,6 @@
+[
+	{ "id": 1, "companyId": 1, "name": "Operating Area 1" },
+	{ "id": 2, "companyId": 1, "name": "Operating Area 2" },
+	{ "id": 3, "companyId": 2, "name": "Operating Area 3" },
+	{ "id": 4, "companyId": 2, "name": "Operating Area 4" }
+]

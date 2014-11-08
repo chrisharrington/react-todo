@@ -21,6 +21,10 @@ require.define({
     "react": function (require, exports, module) {
         return module.exports = React;
     },
+    
+    "react-router": function(require, exports, module) {
+        return module.exports = ReactRouter;
+    },
 
     "flux": function (require, exports, module) {
         return module.exports = Flux;

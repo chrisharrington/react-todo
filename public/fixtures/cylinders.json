@@ -1,0 +1,32 @@
+[
+	{
+		"equipmentProfileId": 1,
+		"throwNumber": 1,
+		"cylinderStage": 1,
+		"model": "the model",
+		"serial": "the serial number",
+		"maxWorkingPressurePSI": 10,
+		"bore": 12,
+		"vvp": false,
+		"vvpModel": "the vvp model",
+		"vvpSetting": "the vvp setting",
+		"vvpTravelPercentage": 45,
+		"cylinderConfiguration": "Blanked Off",
+		"fixedVolume": "None"
+	},
+	{
+		"equipmentProfileId": 1,
+		"throwNumber": 2,
+		"cylinderStage": 2,
+		"model": "the model",
+		"serial": "the serial number",
+		"maxWorkingPressurePSI": 10,
+		"bore": 12,
+		"vvp": false,
+		"vvpModel": "the vvp model",
+		"vvpSetting": "the vvp setting",
+		"vvpTravelPercentage": 45,
+		"cylinderConfiguration": "Blanked Off",
+		"fixedVolume": "None"
+	}
+]

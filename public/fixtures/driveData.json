@@ -1,0 +1,17 @@
+[
+	{
+		"id": 1,
+		"equipmentProfileId": 1,
+		"driverTypeId": 1,
+		"driveType": "Electric",
+		"fuelTypeId": 1,
+		"fuelType": "Natural Gas",
+		"manufacturer": "the manufacturer",
+		"isTurboCharged": true,
+		"turboCount": 3,
+		"ratedRPM": 400,
+		"arrangementNumber": 4,
+		"horsepower": 200,
+		"isManual": false
+	}
+]

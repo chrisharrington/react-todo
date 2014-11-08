@@ -12,28 +12,9 @@
     "underscore": "~1.7.0",
     "backbone": "~1.1.2",
     "moment": "~2.8.3",
-    "marionette": "~2.2.1",
     "fontawesome": "~4.2.0",
     "flux": "~2.0.2",
-    "bootstrap": "~3.2.0",
-    "eventEmitter": "~4.2.9"
-  },
-  "overrides": {
-    "react": {
-      "main": "react-with-addons.js"
-    },
-    "bootstrap": {
-      "main": [
-        "less/bootstrap.less",
-        "dist/css/bootstrap.css",
-        "dist/css/bootstrap-theme.css",
-        "dist/js/bootstrap.js",
-        "dist/fonts/glyphicons-halflings-regular.eot",
-        "dist/fonts/glyphicons-halflings-regular.svg",
-        "dist/fonts/glyphicons-halflings-regular.ttf",
-        "dist/fonts/glyphicons-halflings-regular.woff"
-      ]
-    }
+    "react-router": "~0.10.2"
   },
   "resolutions": {
     "underscore": "~1.7.0"

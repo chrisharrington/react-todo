@@ -4,14 +4,8 @@
 require("extensions");
 require("stores");
 
-$(function () {
-	
-});
+var Routes = require("routes");
 
-function _bootstrap() {
-	_.each([
-		
-	], function(action) {
-		dispatcher.dispatch(Actions[action].all());
-	});
-}
+$(function () {
+    React.renderComponent(new Routes(), document.body);
+});

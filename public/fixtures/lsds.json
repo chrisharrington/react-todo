@@ -1,0 +1,18 @@
+[
+	{ "id": 1, "areaId": 1, "name": "LSD 1" },
+	{ "id": 2, "areaId": 1, "name": "LSD 2" },
+	{ "id": 3, "areaId": 2, "name": "LSD 3" },
+	{ "id": 4, "areaId": 2, "name": "LSD 4" },
+	{ "id": 5, "areaId": 3, "name": "LSD 5" },
+	{ "id": 6, "areaId": 3, "name": "LSD 6" },
+	{ "id": 7, "areaId": 4, "name": "LSD 7" },
+	{ "id": 8, "areaId": 4, "name": "LSD 8" },
+	{ "id": 9, "areaId": 5, "name": "LSD 9" },
+	{ "id": 10, "areaId": 5, "name": "LSD 10" },
+	{ "id": 11, "areaId": 6, "name": "LSD 11" },
+	{ "id": 12, "areaId": 6, "name": "LSD 12" },
+	{ "id": 13, "areaId": 7, "name": "LSD 13" },
+	{ "id": 14, "areaId": 7, "name": "LSD 14" },
+	{ "id": 15, "areaId": 8, "name": "LSD 15" },
+	{ "id": 16, "areaId": 8, "name": "LSD 16" }
+]
