@@ -1,0 +1,12 @@
+[
+    {
+        "id": 1,
+        "name": "Pick up milk",
+        "isComplete": false
+    },
+    {
+        "id": 2,
+        "name": "Pick up dry cleaning",
+        "isComplete": true
+    }
+]

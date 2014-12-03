@@ -1,0 +1,71 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'eventEmitter',
+1 verbose cli   '--save' ]
+2 info using npm@1.4.3
+3 info using node@v0.10.26
+4 warn package.json brunch-spa@1.0.0 No description
+5 warn package.json brunch-spa@1.0.0 No repository field.
+6 warn package.json brunch-spa@1.0.0 No README data
+7 verbose readDependencies using package.json deps
+8 verbose cache add [ 'eventEmitter', null ]
+9 verbose cache add name=undefined spec="eventEmitter" args=["eventEmitter",null]
+10 verbose parsed url { protocol: null,
+10 verbose parsed url   slashes: null,
+10 verbose parsed url   auth: null,
+10 verbose parsed url   host: null,
+10 verbose parsed url   port: null,
+10 verbose parsed url   hostname: null,
+10 verbose parsed url   hash: null,
+10 verbose parsed url   search: null,
+10 verbose parsed url   query: null,
+10 verbose parsed url   pathname: 'eventEmitter',
+10 verbose parsed url   path: 'eventEmitter',
+10 verbose parsed url   href: 'eventEmitter' }
+11 silly lockFile 0c7fd55b-eventEmitter eventEmitter
+12 verbose lock eventEmitter /Users/chrisharrington/.npm/0c7fd55b-eventEmitter.lock
+13 silly lockFile 0c7fd55b-eventEmitter eventEmitter
+14 silly lockFile 0c7fd55b-eventEmitter eventEmitter
+15 verbose addNamed [ 'eventEmitter', '' ]
+16 verbose addNamed [ null, '*' ]
+17 silly lockFile 71396943-eventEmitter eventEmitter@
+18 verbose lock eventEmitter@ /Users/chrisharrington/.npm/71396943-eventEmitter.lock
+19 silly addNameRange { name: 'eventEmitter', range: '*', hasData: false }
+20 verbose url raw eventEmitter
+21 verbose url resolving [ 'https://registry.npmjs.org/', './eventEmitter' ]
+22 verbose url resolved https://registry.npmjs.org/eventEmitter
+23 info trying registry request attempt 1 at 20:37:45
+24 http GET https://registry.npmjs.org/eventEmitter
+25 http 404 https://registry.npmjs.org/eventEmitter
+26 silly registry.get cb [ 404,
+26 silly registry.get   { date: 'Wed, 03 Dec 2014 03:37:46 GMT',
+26 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+26 silly registry.get     'content-type': 'application/json',
+26 silly registry.get     'cache-control': 'max-age=0',
+26 silly registry.get     'content-length': '52',
+26 silly registry.get     'accept-ranges': 'bytes',
+26 silly registry.get     via: '1.1 varnish',
+26 silly registry.get     age: '0',
+26 silly registry.get     'x-served-by': 'cache-lax1432-LAX',
+26 silly registry.get     'x-cache': 'MISS',
+26 silly registry.get     'x-cache-hits': '0',
+26 silly registry.get     'x-timer': 'S1417577865.961511,VS0,VE43',
+26 silly registry.get     'keep-alive': 'timeout=10, max=50',
+26 silly registry.get     connection: 'Keep-Alive' } ]
+27 silly lockFile 71396943-eventEmitter eventEmitter@
+28 silly lockFile 71396943-eventEmitter eventEmitter@
+29 error 404 'eventEmitter' is not in the npm registry.
+29 error 404 You should bug the author to publish it
+29 error 404 It was specified as a dependency of 'brunch-spa'
+29 error 404
+29 error 404 Note that you can also install from a
+29 error 404 tarball, folder, or http url, or git url.
+30 error System Darwin 14.0.0
+31 error command "node" "/usr/local/bin/npm" "install" "eventEmitter" "--save"
+32 error cwd /Users/chrisharrington/Code/react-todo
+33 error node -v v0.10.26
+34 error npm -v 1.4.3
+35 error code E404
+36 verbose exit [ 1, true ]

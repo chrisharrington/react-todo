@@ -14,7 +14,9 @@
     "moment": "~2.8.3",
     "fontawesome": "~4.2.0",
     "flux": "~2.0.2",
-    "react-router": "~0.11.3"
+    "react-router": "~0.11.3",
+    "bootstrap": "~3.3.1",
+    "eventEmitter": "~4.2.10"
   },
   "devDependencies": {}
 }

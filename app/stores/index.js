@@ -1,7 +1,3 @@
-var _ = require("underscore");
-
-_.each([
-    
-], function(location) {
-    require("stores/" + location);
-});
+module.exports = {
+    todo: require("stores/todo")
+};

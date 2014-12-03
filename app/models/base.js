@@ -1,6 +1,7 @@
 var validation = require("utilities/validation");
 
 module.exports = function(methods) {
+    methods = methods || {};
 	var model = Backbone.Model.extend({
 		validate: methods.validate || function() {
 			return [];

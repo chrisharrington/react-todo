@@ -131,8 +131,17 @@ module.exports = {
 require.register("constants", function(exports, require, module) {
 module.exports = {
 	components: {
-
-	}
+        TODO: "todo"
+	},
+    
+    stores: {
+        todo: {
+            ALL: "all-todos",
+            CREATE: "create-todo",
+            UPDATE: "update-todo",
+            REMOVE: "remove-todo"
+        }
+    }
 };
 });
 
@@ -217,12 +226,16 @@ require("extensions");
 require("stores");
 
 var Router = require("react-router"),
-    routes = require("routes");
+    routes = require("routes"),
+    dispatcher = require("dispatcher/dispatcher"),
+    constants = require("constants");
 
 $(function () {
     Router.run(routes, Router.HashLocation, function(Handler) {
         React.render(React.createElement(Handler, null), document.body); 
     });
+    
+    dispatcher.dispatch(constants.stores.todo.ALL);
 });
 });
 
@@ -230,6 +243,7 @@ require.register("models/base", function(exports, require, module) {
 var validation = require("utilities/validation");
 
 module.exports = function(methods) {
+    methods = methods || {};
 	var model = Backbone.Model.extend({
 		validate: methods.validate || function() {
 			return [];
@@ -247,19 +261,86 @@ module.exports = function(methods) {
 };
 });
 
-require.register("pages/test", function(exports, require, module) {
+require.register("models/todo", function(exports, require, module) {
+var Base = require("./base");
+
+module.exports = new Base();
+});
+
+require.register("pages/todo/index", function(exports, require, module) {
 /** @jsx React.DOM */
 /* jshint node: true */
 "use strict";
 
-var React = require("react");
+var React = require("react"),
+    _ = require("underscore"),
+    
+    List = require("./list"),
+    
+    stores = require("stores"),
+    emitter = require("dispatcher/emitter"),
+    constants = require("constants");
 
 module.exports = React.createClass({displayName: 'exports',
+    getInitialState: function() {
+        return {
+            todos: []
+        }  
+    },
+    
+    componentDidMount: function() {
+        stores.todo.registerAndNotify(constants.components.TODO, function(todos) {
+            this.setState({ todos: todos });
+        }.bind(this));
+    },
+    
+    componentsWillUnmount: function() {
+        stores.todo.unregister(constants.components.TODO);  
+    },
+    
+    renderList: function(complete) {
+        return React.createElement(List, {todos: _.where(this.state.todos, function(x) { return x.get("isComplete") === complete; })});
+    },
+    
     render: function() {
-        return React.createElement("div", null, 
-            React.createElement("span", null, "blah")
+        return React.createElement("div", {className: "container"}, 
+            React.createElement("div", {className: "row"}, 
+                React.createElement("div", {className: "col-md-12"}, 
+                    React.createElement("h2", null, "Todo List")
+                )
+            ), 
+                    
+            React.createElement("div", {className: "row"}, 
+                React.createElement("div", {className: "col-md-6"}, 
+                    this.renderList(false)
+                )
+                
+            )
+            
         );
     }
+});
+});
+
+require.register("pages/todo/list", function(exports, require, module) {
+/** @jsx React.DOM */
+/* jshint node: true */
+"use strict";
+
+var _ = require("underscore");
+
+module.exports = React.createClass({displayName: 'exports',
+    renderItems: function() {
+        return _.map(this.props.todos, function(todo) {
+            return React.createElement("li", {className: "list-group-item"}, todo.get("name")); 
+        });
+    },
+    
+    render: function() {
+        return React.createElement("ul", {className: "list-group"}, 
+            this.renderItems()
+        );
+    } 
 });
 });
 
@@ -268,10 +349,10 @@ require.register("routes", function(exports, require, module) {
 var React = require("react"),
     Route = require("react-router").Route,
     
-    Test = require("pages/test");
+    Todo = require("pages/todo");
 
 module.exports = (
-    React.createElement(Route, {name: "test", handler: Test})
+    React.createElement(Route, {name: "todo", handler: Todo})
 );
 });
 
@@ -385,7 +466,7 @@ module.exports = function(model, constants, url, options) {
 	};
 	
 	dispatcher.register(function(payload) {
-		switch (payload.type) {
+		switch (payload.type || payload) {
 			case constants.ALL:
 				me.all(payload.content);
 				break;
@@ -417,13 +498,19 @@ module.exports = function(model, constants, url, options) {
 });
 
 require.register("stores/index", function(exports, require, module) {
-var _ = require("underscore");
-
-_.each([
-    
-], function(location) {
-    require("stores/" + location);
+module.exports = {
+    todo: require("stores/todo")
+};
 });
+
+require.register("stores/todo", function(exports, require, module) {
+var Base = require("./base");
+
+module.exports = new Base(
+    require("models/todo"),
+    require("constants").stores.todo,
+    "fixtures/todos.json"
+);
 });
 
 require.register("utilities/errorHandler", function(exports, require, module) {

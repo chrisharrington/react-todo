@@ -107,7 +107,7 @@ module.exports = function(model, constants, url, options) {
 	};
 	
 	dispatcher.register(function(payload) {
-		switch (payload.type) {
+		switch (payload.type || payload) {
 			case constants.ALL:
 				me.all(payload.content);
 				break;
