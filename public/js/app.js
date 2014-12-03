@@ -209,16 +209,20 @@ String.prototype.endsWith = function(value) {
 });
 
 require.register("initialize", function(exports, require, module) {
+/** @jsx React.DOM */
 /* jshint node: true */
 "use strict";
 
 require("extensions");
 require("stores");
 
-var Routes = require("routes");
+var Router = require("react-router"),
+    routes = require("routes");
 
 $(function () {
-    React.renderComponent(new Routes(), document.body);
+    Router.run(routes, Router.HashLocation, function(Handler) {
+        React.render(React.createElement(Handler, null), document.body); 
+    });
 });
 });
 
@@ -252,8 +256,8 @@ var React = require("react");
 
 module.exports = React.createClass({displayName: 'exports',
     render: function() {
-        return React.DOM.div(null, 
-            React.DOM.span(null, "blah")
+        return React.createElement("div", null, 
+            React.createElement("span", null, "blah")
         );
     }
 });
@@ -262,18 +266,13 @@ module.exports = React.createClass({displayName: 'exports',
 require.register("routes", function(exports, require, module) {
 /** @jsx React.DOM */
 var React = require("react"),
-    Routes = require("react-router").Routes,
     Route = require("react-router").Route,
     
     Test = require("pages/test");
 
-module.exports = React.createClass({displayName: 'exports',
-    render: function() {
-        return Routes({location: "hash"}, 
-            Route({name: "test", handler: Test})
-        );
-    }
-});
+module.exports = (
+    React.createElement(Route, {name: "test", handler: Test})
+);
 });
 
 require.register("stores/base", function(exports, require, module) {
