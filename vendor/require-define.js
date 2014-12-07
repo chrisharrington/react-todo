@@ -28,5 +28,9 @@ require.define({
 
     "flux": function (require, exports, module) {
         return module.exports = Flux;
+    },
+    
+    "eventEmitter": function(require, exports, module) {
+        return module.exports = EventEmitter;
     }
 });

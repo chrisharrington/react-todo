@@ -40257,6 +40257,10 @@ require.define({
 
     "flux": function (require, exports, module) {
         return module.exports = Flux;
+    },
+    
+    "eventEmitter": function(require, exports, module) {
+        return module.exports = EventEmitter;
     }
 });
 require.register("test/actions/base.test", function(exports, require, module) {

@@ -2,11 +2,31 @@
     {
         "id": 1,
         "name": "Pick up milk",
+        "due": 1418310195547,
         "isComplete": false
     },
     {
         "id": 2,
         "name": "Pick up dry cleaning",
+        "completed": 1417619596419,
+        "isComplete": true
+    },
+    {
+        "id": 3,
+        "name": "Grocery shopping",
+        "due": 1418310695547,
+        "isComplete": false
+    },
+    {
+        "id": 4,
+        "name": "Hem pants",
+        "due": 1418310696547,
+        "isComplete": false
+    },
+    {
+        "id": 5,
+        "name": "Oil change",
+        "complete": 1417619597419,
         "isComplete": true
     }
 ]

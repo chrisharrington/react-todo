@@ -36,11 +36,11 @@
 20 verbose url raw eventEmitter
 21 verbose url resolving [ 'https://registry.npmjs.org/', './eventEmitter' ]
 22 verbose url resolved https://registry.npmjs.org/eventEmitter
-23 info trying registry request attempt 1 at 20:37:45
+23 info trying registry request attempt 1 at 06:49:36
 24 http GET https://registry.npmjs.org/eventEmitter
 25 http 404 https://registry.npmjs.org/eventEmitter
 26 silly registry.get cb [ 404,
-26 silly registry.get   { date: 'Wed, 03 Dec 2014 03:37:46 GMT',
+26 silly registry.get   { date: 'Sun, 07 Dec 2014 13:49:36 GMT',
 26 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
 26 silly registry.get     'content-type': 'application/json',
 26 silly registry.get     'cache-control': 'max-age=0',
@@ -48,10 +48,10 @@
 26 silly registry.get     'accept-ranges': 'bytes',
 26 silly registry.get     via: '1.1 varnish',
 26 silly registry.get     age: '0',
-26 silly registry.get     'x-served-by': 'cache-lax1432-LAX',
+26 silly registry.get     'x-served-by': 'cache-sjc3126-SJC',
 26 silly registry.get     'x-cache': 'MISS',
 26 silly registry.get     'x-cache-hits': '0',
-26 silly registry.get     'x-timer': 'S1417577865.961511,VS0,VE43',
+26 silly registry.get     'x-timer': 'S1417960176.550527,VS0,VE155',
 26 silly registry.get     'keep-alive': 'timeout=10, max=50',
 26 silly registry.get     connection: 'Keep-Alive' } ]
 27 silly lockFile 71396943-eventEmitter eventEmitter@

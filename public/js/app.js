@@ -122,26 +122,47 @@ module.exports = function(constants) {
 };
 });
 
+require.register("actions/todo/all", function(exports, require, module) {
+"use strict";
+
+var constants = require("constants");
+
+module.exports = {
+      
+};
+});
+
 require.register("config", function(exports, require, module) {
 module.exports = {
 	fixtures: true
 };
 });
 
-require.register("constants", function(exports, require, module) {
+require.register("constants/components", function(exports, require, module) {
+"use strict";
+
 module.exports = {
-	components: {
-        TODO: "todo"
-	},
+    todo: "todo-component"
+};
+});
+
+require.register("constants/index", function(exports, require, module) {
+"use strict";
+
+module.exports = {
+    components: require("./components"),
+    todo: require("./todo")
+};
+});
+
+require.register("constants/todo", function(exports, require, module) {
+module.exports = {
+    change: "todos-changed",
     
-    stores: {
-        todo: {
-            ALL: "all-todos",
-            CREATE: "create-todo",
-            UPDATE: "update-todo",
-            REMOVE: "remove-todo"
-        }
-    }
+    all: "all-todos",
+    create: "create-todo",
+    update: "update-todo",
+    remove: "remove-todo"
 };
 });
 
@@ -181,7 +202,7 @@ var Controller = Backbone.Marionette.Controller.extend({
 module.exports = Controller;
 });
 
-require.register("dispatcher/dispatcher", function(exports, require, module) {
+require.register("dispatcher", function(exports, require, module) {
 /* jshint node: true */
 "use strict";
 
@@ -190,31 +211,10 @@ var Dispatcher = require("flux").Dispatcher;
 module.exports = new Dispatcher();
 });
 
-require.register("dispatcher/emitter", function(exports, require, module) {
+require.register("emitter", function(exports, require, module) {
+var EventEmitter = require("eventEmitter");
+
 module.exports = new EventEmitter();
-});
-
-require.register("extensions/array", function(exports, require, module) {
-Array.prototype.dict = function(prop) {
-    var obj = {};
-    for (var i = 0; i < this.length; i++)
-        obj[this[i][prop]] = this[i];
-    return obj;
-};
-});
-
-require.register("extensions/index", function(exports, require, module) {
-["string", "array"].forEach(function(location) {
-    require("extensions/" + location);  
-});
-});
-
-require.register("extensions/string", function(exports, require, module) {
-String.prototype.endsWith = function(value) {
-	if (value.length > this.length)
-		return false;
-	return value.length <= this.length && this.substr(this.length - value.length, value.length) === value;
-};
 });
 
 require.register("initialize", function(exports, require, module) {
@@ -222,49 +222,18 @@ require.register("initialize", function(exports, require, module) {
 /* jshint node: true */
 "use strict";
 
-require("extensions");
 require("stores");
 
 var Router = require("react-router"),
     routes = require("routes"),
-    dispatcher = require("dispatcher/dispatcher"),
+    dispatcher = require("dispatcher"),
     constants = require("constants");
 
 $(function () {
     Router.run(routes, Router.HashLocation, function(Handler) {
         React.render(React.createElement(Handler, null), document.body); 
     });
-    
-    dispatcher.dispatch(constants.stores.todo.ALL);
 });
-});
-
-require.register("models/base", function(exports, require, module) {
-var validation = require("utilities/validation");
-
-module.exports = function(methods) {
-    methods = methods || {};
-	var model = Backbone.Model.extend({
-		validate: methods.validate || function() {
-			return [];
-		},
-
-		all: function() {
-			var all = {};
-			for (var name in this.attributes)
-				all[name] = false;
-			return all;
-		}
-	});
-	
-	return model;
-};
-});
-
-require.register("models/todo", function(exports, require, module) {
-var Base = require("./base");
-
-module.exports = new Base();
 });
 
 require.register("pages/todo/index", function(exports, require, module) {
@@ -276,10 +245,11 @@ var React = require("react"),
     _ = require("underscore"),
     
     List = require("./list"),
+    Modal = require("./modal"),
     
-    stores = require("stores"),
-    emitter = require("dispatcher/emitter"),
-    constants = require("constants");
+    dispatcher = require("dispatcher"),
+    emitter = require("emitter"),
+    constants = require("constants").todo;
 
 module.exports = React.createClass({displayName: 'exports',
     getInitialState: function() {
@@ -287,52 +257,69 @@ module.exports = React.createClass({displayName: 'exports',
             todos: []
         }  
     },
-    
-    componentDidMount: function() {
-        stores.todo.registerAndNotify(constants.components.TODO, function(todos) {
+
+    componentWillMount: function() {
+        emitter.on(constants.changed, function(todos) {
             this.setState({ todos: todos });
         }.bind(this));
     },
     
+    componentDidMount: function() {
+        dispatcher.dispatch({ type: constants.all });
+    },
+    
     componentsWillUnmount: function() {
-        stores.todo.unregister(constants.components.TODO);  
+        emitter.off(constants.all);
+    },
+    
+    create: function() {
+        this.refs.create.show();
     },
     
     renderList: function(complete) {
-        return React.createElement(List, {todos: _.where(this.state.todos, function(x) { return x.get("isComplete") === complete; })});
+        return React.createElement(List, {todos: _.filter(this.state.todos, function(x) { return x.isComplete === complete; })});
     },
     
     render: function() {
         return React.createElement("div", {className: "container"}, 
             React.createElement("div", {className: "row"}, 
-                React.createElement("div", {className: "col-md-12"}, 
+                React.createElement("div", {className: "col-md-8"}, 
                     React.createElement("h2", null, "Todo List")
+                ), 
+                React.createElement("div", {className: "col-md-4"}, 
+                    React.createElement("button", {type: "button", className: "btn btn-primary pull-right spacing-top", onClick: this.create}, "New Task")
                 )
             ), 
                     
             React.createElement("div", {className: "row"}, 
                 React.createElement("div", {className: "col-md-6"}, 
+                    React.createElement("h3", {className: "spacing-bottom"}, "Incomplete"), 
                     this.renderList(false)
+                ), 
+                React.createElement("div", {className: "col-md-6"}, 
+                    React.createElement("h3", {className: "spacing-bottom"}, "Complete"), 
+                    this.renderList(true)
                 )
-                
-            )
+            ), 
             
+            React.createElement(Modal, {ref: "create"})
         );
     }
 });
 });
 
-require.register("pages/todo/list", function(exports, require, module) {
+require.register("pages/todo/list/index", function(exports, require, module) {
 /** @jsx React.DOM */
 /* jshint node: true */
 "use strict";
 
-var _ = require("underscore");
+var _ = require("underscore"),
+    Item = require("./item");
 
 module.exports = React.createClass({displayName: 'exports',
     renderItems: function() {
         return _.map(this.props.todos, function(todo) {
-            return React.createElement("li", {className: "list-group-item"}, todo.get("name")); 
+            return React.createElement(Item, {todo: todo});
         });
     },
     
@@ -341,6 +328,85 @@ module.exports = React.createClass({displayName: 'exports',
             this.renderItems()
         );
     } 
+});
+});
+
+require.register("pages/todo/list/item", function(exports, require, module) {
+/** @jsx React.DOM */
+/* jshint node: true */
+"use strict";
+
+var constants = require("constants").todo,
+    dispatcher = require("dispatcher");
+
+module.exports = React.createClass({displayName: 'exports',
+    toggle: function() {
+        this.props.todo.isComplete = !this.props.todo.isComplete;
+        dispatcher.dispatch({ type: constants.update, content: this.props.todo });
+    },
+    
+    render: function() {
+        return React.createElement("li", {className: "list-group-item pointer", onClick: this.toggle}, this.props.todo.name); 
+    } 
+});
+});
+
+require.register("pages/todo/modal", function(exports, require, module) {
+/** @jsx React.DOM */
+"use strict";
+
+var React = require("react");
+
+module.exports = React.createClass({displayName: 'exports',
+    getInitialState: function() {
+        return {
+            visible: false
+        };
+    },
+    
+    componentDidMount: function () {
+        this.$el = $(this.getDOMNode());
+        this.$el.on("hidden.bs.modal", this.reset);
+    },
+
+    show: function () {
+        this.$el.modal("show");
+    },
+
+    reset: function() {
+        
+    },
+    
+    save: function() {
+        
+    },
+    
+    render: function() {
+		return React.createElement("div", {className: "modal fade", tabIndex: "-1", role: "dialog", 'aria-hidden': "true"}, 
+            React.createElement("div", {className: "modal-sm"}, 
+                React.createElement("div", {className: "modal-content"}, 
+                    React.createElement("div", {className: "modal-header"}, 
+                        React.createElement("button", {type: "button", className: "close", 'data-dismiss': "modal"}, 
+                            React.createElement("span", {'aria-hidden': "true"}, "×"), 
+                            React.createElement("span", {className: "sr-only"}, "Close")
+                        ), 
+                        React.createElement("h3", {className: "modal-title"}, "New Task")
+                    ), 
+                    React.createElement("div", {className: "modal-body container"}, 
+						"blah"
+                    ), 
+                    React.createElement("div", {className: "modal-footer"}, 
+						React.createElement("div", {className: "row"}, 
+							React.createElement("div", {className: "col col-md-12"}, 
+								React.createElement("button", {type: "button", className: "btn btn-primary pull-right", onClick: this.save}, "Save"), 
+                                React.createElement("button", {type: "button", className: "btn btn-default pull-right spacing-right", onClick: this.reset, 'data-dismiss': "modal"}, "Close")
+							)
+						)
+                    )
+                )
+            )
+        );
+    }
 });
 });
 
@@ -357,143 +423,52 @@ module.exports = (
 });
 
 require.register("stores/base", function(exports, require, module) {
-/* jshint node: true */
 "use strict";
 
-var Config = require("config"),
-	Backbone = require("backbone"),
-	
-	emitter = require("dispatcher/emitter"),
-	dispatcher = require("dispatcher/dispatcher");
+var _ = require("underscore"),
+    emitter = require("emitter"),
+    dispatcher = require("dispatcher"),
+    constants = require("constants");
 
-module.exports = function(model, constants, url, options) {
-	var me = this;
-	var Collection = Backbone.Collection.extend({ model: model, url: url });
-	
-	var _collection = new Collection,
-		_registrants = {},
-		_history = [],
-		_sort = "name",
-		_loaded = false;
-	
-	if (options && options.sort)
-		_sort = options.sort;
-	if (!(_sort instanceof Array))
-		_sort = [_sort];
-	
-	_collection.comparator = _buildSortMethod(_sort);
-	
-	this.all = function(filter) {
-		var me = this;
-		return new Promise(function(resolve, reject) {
-			_collection.fetch({
-				data: filter,
-				success: function(result, response) {
-					var models = result.models;
-					resolve(models);
-					_loaded = true;
-					me.notify();
-				}
-			});
-		});
-	};
-	
-	this.update = function(content) {
-		var me = this;
-		return new Promise(function(resolve) {
-			setTimeout(function() {
-				var model = _.find(_collection.models, function(x) { return x.get("id") === content.get("id"); });
-				for (var name in model.attributes)
-					model.set(name, content.get(name));
-				resolve();
-				me.notify();
-			}, 500);
-		});
-	};
-						   
-	this.create = function(content) {
-		var me = this;
-		return new Promise(function(resolve) {
-			setTimeout(function() {
-				content.set("id", _.sortBy(_collection.models, function(x) { return x.id; })[_collection.models.length-1].get("id") + 1);
-				_collection.add(content);
-				resolve();
-				me.notify();
-			}, 500);
-		});
-	};
-	
-	this.remove = function(content) {
-		var me = this;
-		return new Promise(function(resolve) {
-			setTimeout(function() {
-				_collection.models = _.without(_collection.models, _.findWhere(_collection.models, { id: content.id }));
-				resolve();
-				me.notify();
-			}, 500);
-		});
-	};
-	
-	this.register = function(key, registrants) {
-		if (!(registrants instanceof Array))
-			registrants = [registrants];
-		
-		if (_registrants[key] === undefined)
-			_registrants[key] = [];
-		
-		_registrants[key] = _registrants[key].concat(registrants);
-	};
-	
-	this.registerAndNotify = function(key, registrants) {
-		this.register(key, registrants);
-		this.notify();
-	};
-	
-	this.notify = function() {
-		if (!_loaded)
-			return;
-		
-		_collection.sort();
-		for (var name in _registrants)
-			_.each(_registrants[name], function(registrant) {
-				if (registrant !== undefined)
-					registrant(_collection.models);
-			});
-	}
-	
-	this.unregister = function(key) {
-		delete _registrants[key];
-	};
-	
-	dispatcher.register(function(payload) {
-		switch (payload.type || payload) {
-			case constants.ALL:
-				me.all(payload.content);
-				break;
-			case constants.UPDATE:
-				me.update(payload.content);
-				break;
-			case constants.CREATE:
-				me.create(payload.content);
-				break;
-			case constants.REMOVE:
-				me.remove(payload.content);
-				break;
-		}
-	});
-	
-	function _buildSortMethod(sort) {
-		return function(model) {
-			var joined = "";
-			_.each(sort, function(s) {
-				var current = model.get(s);
-				if (current.toLowerCase)
-					current = current.toLowerCase();
-				joined += current;
-			});
-			return joined;
-		};
-	}
+module.exports = function(url, constants) {
+    this._url = url;
+    this._collection = [];
+    
+    $.get(this._url).then(function(data) {
+        this._collection = data;
+        _notify.call(this);
+    }.bind(this));
+    
+    dispatcher.register(function(payload) {
+        switch (payload.type) {
+            case constants.all:
+                this._all();
+                break;
+                
+            case constants.update:
+                this._update(payload.content);
+                break;
+        }
+    }.bind(this));
+    
+    this._all = function() {
+        _notify.call(this);
+    }.bind(this);
+    
+    this._update = function(content) {
+        for (var i = 0; i < this._collection.length; i++) {
+            var found = this._collection[i];
+            if (found.id === content.id) {
+                for (var name in found)
+                    found[name] = content[name];
+            }
+        }
+        _notify.call(this);
+    }
+    
+    function _notify() {
+        emitter.emit(constants.changed, this._collection);
+    }
 };
 });
 
@@ -504,13 +479,10 @@ module.exports = {
 });
 
 require.register("stores/todo", function(exports, require, module) {
-var Base = require("./base");
+var Base = require("./base"),
+    constants = require("constants").todo;
 
-module.exports = new Base(
-    require("models/todo"),
-    require("constants").stores.todo,
-    "fixtures/todos.json"
-);
+module.exports = new Base("fixtures/todos.json", constants);
 });
 
 require.register("utilities/errorHandler", function(exports, require, module) {

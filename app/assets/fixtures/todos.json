@@ -8,5 +8,20 @@
         "id": 2,
         "name": "Pick up dry cleaning",
         "isComplete": true
+    },
+    {
+        "id": 3,
+        "name": "Grocery shopping",
+        "isComplete": false
+    },
+    {
+        "id": 4,
+        "name": "Hem pants",
+        "isComplete": false
+    },
+    {
+        "id": 5,
+        "name": "Oil change",
+        "isComplete": true
     }
 ]
