@@ -23,6 +23,10 @@ module.exports = function(url, constants) {
             case constants.update:
                 this._update(payload.content);
                 break;
+                
+            case constants.create:
+                this._create(payload.content);
+                break;
         }
     }.bind(this));
     
@@ -31,13 +35,15 @@ module.exports = function(url, constants) {
     }.bind(this);
     
     this._update = function(content) {
-        for (var i = 0; i < this._collection.length; i++) {
-            var found = this._collection[i];
-            if (found.id === content.id) {
-                for (var name in found)
-                    found[name] = content[name];
-            }
-        }
+        var found = _.find(this._collection, function(x) { return x.id === content.id; });
+        for (var name in found)
+            found[name] = content[name];
+        _notify.call(this);
+    };
+    
+    this._create = function(content) {
+        content.id = _.max(this._collection, function(x) { return x.id; }).id + 1;
+        this._collection.push(content);
         _notify.call(this);
     }
     

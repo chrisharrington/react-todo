@@ -355,18 +355,31 @@ require.register("pages/todo/modal", function(exports, require, module) {
 /** @jsx React.DOM */
 "use strict";
 
-var React = require("react");
+var React = require("react"),
+    
+    dispatcher = require("dispatcher"),
+    emitter = require("emitter"),
+    constants = require("constants").todo;
 
 module.exports = React.createClass({displayName: 'exports',
     getInitialState: function() {
         return {
-            visible: false
+            visible: false,
+            value: ""
         };
     },
     
     componentDidMount: function () {
         this.$el = $(this.getDOMNode());
         this.$el.on("hidden.bs.modal", this.reset);
+        
+        emitter.on(constants.changed, function() {
+            this.$el.modal("hide");
+        }.bind(this));
+    },
+    
+    componentWillUnmount: function() {
+        emitter.off(constants.changed);
     },
 
     show: function () {
@@ -374,16 +387,20 @@ module.exports = React.createClass({displayName: 'exports',
     },
 
     reset: function() {
-        
+        this.setState({ value: "" });
     },
     
     save: function() {
-        
+        dispatcher.dispatch({ type: constants.create, content: { name: this.state.value, isComplete: false }});
+    },
+    
+    onChange: function(e) {
+        this.setState({ value: e.target.value });
     },
     
     render: function() {
 		return React.createElement("div", {className: "modal fade", tabIndex: "-1", role: "dialog", 'aria-hidden': "true"}, 
-            React.createElement("div", {className: "modal-sm"}, 
+            React.createElement("div", {className: "modal-dialog modal-sm"}, 
                 React.createElement("div", {className: "modal-content"}, 
                     React.createElement("div", {className: "modal-header"}, 
                         React.createElement("button", {type: "button", className: "close", 'data-dismiss': "modal"}, 
@@ -393,7 +410,11 @@ module.exports = React.createClass({displayName: 'exports',
                         React.createElement("h3", {className: "modal-title"}, "New Task")
                     ), 
                     React.createElement("div", {className: "modal-body container"}, 
-						"blah"
+                        React.createElement("div", {className: "row"}, 
+                            React.createElement("div", {className: "col-md-12"}, 
+                                React.createElement("input", {placeholder: "Task name...", type: "text", value: this.state.value, onChange: this.onChange})
+                            )
+                        )
                     ), 
                     React.createElement("div", {className: "modal-footer"}, 
 						React.createElement("div", {className: "row"}, 
@@ -448,6 +469,10 @@ module.exports = function(url, constants) {
             case constants.update:
                 this._update(payload.content);
                 break;
+                
+            case constants.create:
+                this._create(payload.content);
+                break;
         }
     }.bind(this));
     
@@ -456,13 +481,15 @@ module.exports = function(url, constants) {
     }.bind(this);
     
     this._update = function(content) {
-        for (var i = 0; i < this._collection.length; i++) {
-            var found = this._collection[i];
-            if (found.id === content.id) {
-                for (var name in found)
-                    found[name] = content[name];
-            }
-        }
+        var found = _.find(this._collection, function(x) { return x.id === content.id; });
+        for (var name in found)
+            found[name] = content[name];
+        _notify.call(this);
+    };
+    
+    this._create = function(content) {
+        content.id = _.max(this._collection, function(x) { return x.id; }).id + 1;
+        this._collection.push(content);
         _notify.call(this);
     }
     
