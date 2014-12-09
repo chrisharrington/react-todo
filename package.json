@@ -1,5 +1,5 @@
 {
-  "name": "brunch-spa",
+  "name": "react-todo",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -22,9 +22,7 @@
     "stylus-brunch": "1.7.x",
     "uglify-js-brunch": "1.7.x",
     "underscore": "^1.6.0",
-    "pm2": "^0.11.1",
     "brunch": "^1.7.18",
-    "react-test-utils": "0.0.1",
     "less-brunch": "^1.7.2"
   },
   "devDependencies": {

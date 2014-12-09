@@ -1,6 +1,0 @@
-[
-	{ "id": 1, "firstName": "Chris", "lastName": "Harrington", "email": "chrisharrington99@gmail.com", "phone": "4037102038", "roleId": 1, "role": "Supervisor", "companyId": 1, "company": "IONO Ltd.", "operatingAreaId": 1, "operatingArea": "Operating Area 1" },
-	{ "id": 2, "firstName": "Donnovan", "lastName": "Lewis", "email": "someemail@gmail.com", "phone": "4031234567", "roleId": 1, "role": "Supervisor", "companyId": 2, "company": "Some Other Company", "operatingAreaId": 2, "operatingArea": "Operating Area 2" },
-	{ "id": 3, "firstName": "Ron", "lastName": "Graw", "email": "someotheremail@gmail.com", "phone": "4037654321", "roleId": 1, "role": "Supervisor", "companyId": 2, "company": "Some Other Company", "operatingAreaId": 3, "operatingArea": "Operating Area 3" },
-	{ "id": 4, "firstName": "Marty", "lastName": "Hamm", "email": "yetanotheremail@gmail.com", "phone": "4031357924", "roleId": 2, "role": "Operator", "companyId": 1, "company": "IONO Ltd.", "operatingAreaId": 4, "operatingArea": "Operating Area 4" }
-]

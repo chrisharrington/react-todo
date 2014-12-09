@@ -32723,9 +32723,9 @@ if (typeof jQuery === 'undefined') {
 }(jQuery);
 
 /*!
- * EventEmitter v4.2.10 - git.io/ee
- * Oliver Caldwell
- * MIT license
+ * EventEmitter v4.2.11 - git.io/ee
+ * Unlicense - http://unlicense.org/
+ * Oliver Caldwell - http://oli.me.uk/
  * @preserve
  */
 

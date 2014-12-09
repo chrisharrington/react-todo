@@ -54,12 +54,8 @@ module.exports = React.createClass({
                         </button>
                         <h3 className="modal-title">New Task</h3>
                     </div>
-                    <div className="modal-body container">
-                        <div className="row">
-                            <div className="col-md-12">
-                                <input placeholder="Task name..." type="text" value={this.state.value} onChange={this.onChange} />        
-                            </div>
-                        </div>
+                    <div className="modal-body">
+                        <input placeholder="Task name..." type="text" value={this.state.value} onChange={this.onChange} />        
                     </div>
                     <div className="modal-footer">
 						<div className="row">

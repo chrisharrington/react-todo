@@ -3,13 +3,9 @@
 
 require("stores");
 
-var Router = require("react-router"),
-    routes = require("routes"),
-    dispatcher = require("dispatcher"),
-    constants = require("constants");
+var React = require("react"),
+    Todo = require("pages/todo");
 
 $(function () {
-    Router.run(routes, Router.HashLocation, function(Handler) {
-        React.render(<Handler />, document.body); 
-    });
+    React.render(new Todo(), $("#app")[0]);
 });

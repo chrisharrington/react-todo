@@ -1,11 +1,6 @@
 .PHONY: build clean start stop list package
 
 clean:
-	if [ -a ./node_modules/pm2/bin/pm2 ] ; \
-    then \
-         make stop ; \
-    fi;
-
 	rm -rf bower_components
 	rm -rf node_modules
 	rm -rf public

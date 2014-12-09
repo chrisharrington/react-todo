@@ -224,15 +224,11 @@ require.register("initialize", function(exports, require, module) {
 
 require("stores");
 
-var Router = require("react-router"),
-    routes = require("routes"),
-    dispatcher = require("dispatcher"),
-    constants = require("constants");
+var React = require("react"),
+    Todo = require("pages/todo");
 
 $(function () {
-    Router.run(routes, Router.HashLocation, function(Handler) {
-        React.render(React.createElement(Handler, null), document.body); 
-    });
+    React.render(new Todo(), $("#app")[0]);
 });
 });
 
@@ -409,12 +405,8 @@ module.exports = React.createClass({displayName: 'exports',
                         ), 
                         React.createElement("h3", {className: "modal-title"}, "New Task")
                     ), 
-                    React.createElement("div", {className: "modal-body container"}, 
-                        React.createElement("div", {className: "row"}, 
-                            React.createElement("div", {className: "col-md-12"}, 
-                                React.createElement("input", {placeholder: "Task name...", type: "text", value: this.state.value, onChange: this.onChange})
-                            )
-                        )
+                    React.createElement("div", {className: "modal-body"}, 
+                        React.createElement("input", {placeholder: "Task name...", type: "text", value: this.state.value, onChange: this.onChange})
                     ), 
                     React.createElement("div", {className: "modal-footer"}, 
 						React.createElement("div", {className: "row"}, 
@@ -429,18 +421,6 @@ module.exports = React.createClass({displayName: 'exports',
         );
     }
 });
-});
-
-require.register("routes", function(exports, require, module) {
-/** @jsx React.DOM */
-var React = require("react"),
-    Route = require("react-router").Route,
-    
-    Todo = require("pages/todo");
-
-module.exports = (
-    React.createElement(Route, {name: "todo", handler: Todo})
-);
 });
 
 require.register("stores/base", function(exports, require, module) {
