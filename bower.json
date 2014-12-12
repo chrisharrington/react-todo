@@ -1,5 +1,5 @@
 {
-  "name": "your-app",
+  "name": "react-todo",
   "version": "0.1.0",
   "ignore": [
     "**/.*",
@@ -11,10 +11,8 @@
     "jquery": "~2.1.1",
     "underscore": "~1.7.0",
     "backbone": "~1.1.2",
-    "moment": "~2.8.3",
     "fontawesome": "~4.2.0",
     "flux": "~2.0.2",
-    "react-router": "~0.11.3",
     "bootstrap": "~3.3.1",
     "eventEmitter": "~4.2.10"
   },
