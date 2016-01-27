@@ -1,5 +1,5 @@
 module.exports = {
-    change: "todos-changed",
+    changed: "todos-changed",
     
     all: "all-todos",
     create: "create-todo",
